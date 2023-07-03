@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  db:
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_HOST=db
+      - POSTGRES_NAME=${DB_NAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    image: postgres
+    ports:
+      - 5432:5432
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+
+  server:
+    build:
+      dockerfile: Dockerfile.server
+    ports:
+      - 3001:3001
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+
+  daemon:
+    build:
+      dockerfile: Dockerfile.daemon
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
